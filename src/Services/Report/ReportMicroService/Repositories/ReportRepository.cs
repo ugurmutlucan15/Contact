@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
+﻿using MongoDB.Driver;
+
 using ReportMicroService.Data.Interfaces;
 using ReportMicroService.Entities;
 using ReportMicroService.Repositories.Interfaces;
-using MongoDB.Driver;
+
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace ReportMicroService.Repositories
 {
@@ -26,7 +27,7 @@ namespace ReportMicroService.Repositories
                 return await _ctx.Report.Find(filter).ToListAsync();
             }
 
-            return await _ctx.Report.Find(m=>true).ToListAsync();
+            return await _ctx.Report.Find(m => true).ToListAsync();
         }
 
         public async Task<Report> GetReport(string id)
@@ -52,6 +53,5 @@ namespace ReportMicroService.Repositories
             var deleteResult = await _ctx.Report.DeleteOneAsync(filter);
             return deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0;
         }
-
     }
 }

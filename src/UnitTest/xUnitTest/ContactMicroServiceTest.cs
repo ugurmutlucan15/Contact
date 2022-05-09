@@ -1,18 +1,12 @@
-﻿using ContactMicroService.Repositories.Interfaces;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ContactMicroService.Entities;
+using ContactMicroService.Repositories.Interfaces;
+
 using Microsoft.Extensions.DependencyInjection;
+
+using System.Collections.Generic;
+using System.Linq;
+
 using Xunit;
-using ContactMicroService;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using ContactMicroService.Entities;
 
 namespace xUnitTest
 {

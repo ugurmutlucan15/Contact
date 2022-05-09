@@ -1,8 +1,8 @@
-﻿using System;
-
-using EventBusRabbitMQ.Events;
+﻿using EventBusRabbitMQ.Events;
 
 using MongoDB.Bson.Serialization.Attributes;
+
+using System;
 
 namespace ReportMicroService.Entities
 {

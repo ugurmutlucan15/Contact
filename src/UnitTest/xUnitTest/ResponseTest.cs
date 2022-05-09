@@ -1,7 +1,11 @@
 using ContactMicroService.Entities;
 using ContactMicroService.Repositories.Interfaces;
+
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
 using Newtonsoft.Json;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +13,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using Microsoft.Extensions.DependencyInjection;
+
 using Xunit;
 
 namespace xUnitTest
@@ -64,6 +68,7 @@ namespace xUnitTest
                                 ContactValue = data.FirstName + data.LastName + "@testmail.com",
                             });
                             break;
+
                         case 2:
                             data.ContactDetails.Add(new ContactDetail
                             {
@@ -71,6 +76,7 @@ namespace xUnitTest
                                 ContactValue = city[new Random().Next(0, city.Length)],
                             });
                             break;
+
                         case 3:
                             data.ContactDetails.Add(new ContactDetail
                             {
@@ -210,7 +216,7 @@ namespace xUnitTest
             }
         }
 
-        #endregion
+        #endregion Contact
 
         #region Report
 
@@ -240,6 +246,6 @@ namespace xUnitTest
             Assert.Equal(HttpStatusCode.OK, res.StatusCode);
         }
 
-        #endregion
+        #endregion Report
     }
 }

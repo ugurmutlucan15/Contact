@@ -1,7 +1,8 @@
-﻿using ReportMicroService.Data.Interfaces;
+﻿using MongoDB.Driver;
+
+using ReportMicroService.Data.Interfaces;
 using ReportMicroService.Entities;
 using ReportMicroService.Settings;
-using MongoDB.Driver;
 
 namespace ReportMicroService.Data
 {
@@ -16,6 +17,5 @@ namespace ReportMicroService.Data
         }
 
         public IMongoCollection<Report> Report { get; }
-
     }
 }

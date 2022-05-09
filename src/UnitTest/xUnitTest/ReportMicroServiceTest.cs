@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using EventBusRabbitMQ.Events;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
+﻿using EventBusRabbitMQ.Events;
+
 using Microsoft.Extensions.DependencyInjection;
-using ReportMicroService;
+
 using ReportMicroService.Entities;
 using ReportMicroService.Repositories.Interfaces;
+
+using System;
+using System.Linq;
+
 using Xunit;
 
 namespace xUnitTest

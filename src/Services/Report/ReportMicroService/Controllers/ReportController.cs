@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-
-using AutoMapper;
+﻿using AutoMapper;
 
 using EventBusRabbitMQ.Contact;
 using EventBusRabbitMQ.Core;
@@ -17,6 +10,11 @@ using Microsoft.Extensions.Logging;
 using ReportMicroService.Entities;
 using ReportMicroService.Repositories.Interfaces;
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace ReportMicroService.Controllers
 {
@@ -55,7 +53,6 @@ namespace ReportMicroService.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public ActionResult GetReportCreate()
         {
-
             try
             {
                 var model = new Report
@@ -67,7 +64,6 @@ namespace ReportMicroService.Controllers
 
                 var eventMessage = _mapper.Map<ReportCreateEvent>(model);
                 _eventBus.Publish(EventBusConstants.ReportCreateQueue, eventMessage);
-
             }
             catch (Exception e)
             {
@@ -78,8 +74,8 @@ namespace ReportMicroService.Controllers
             return Ok();
         }
 
-        #endregion
+        #endregion Report
 
-        #endregion
+        #endregion Crud_Actions
     }
 }

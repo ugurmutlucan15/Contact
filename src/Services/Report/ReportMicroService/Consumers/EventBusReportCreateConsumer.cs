@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-
-using AutoMapper;
+﻿using AutoMapper;
 
 using EventBusRabbitMQ;
 using EventBusRabbitMQ.Contact;
@@ -21,6 +15,11 @@ using RabbitMQ.Client.Events;
 using ReportMicroService.Entities;
 using ReportMicroService.Models;
 using ReportMicroService.Repositories.Interfaces;
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 namespace ReportMicroService.Consumers
 {
@@ -65,7 +64,7 @@ namespace ReportMicroService.Consumers
             {
                 var data = JsonConvert.DeserializeObject<List<ReportDetailModel>>(@event!.Data.ToString()!);
 
-                var path = Directory.GetCurrentDirectory();
+                //var path = Directory.GetCurrentDirectory();
                 var filename = $"{Guid.NewGuid()}_Report.xlsx";
                 var filePath = Path.Combine("Export", filename);
 

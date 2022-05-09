@@ -1,6 +1,6 @@
-﻿using ReportMicroService.Entities;
+﻿using MongoDB.Driver;
 
-using MongoDB.Driver;
+using ReportMicroService.Entities;
 
 namespace ReportMicroService.Data.Interfaces
 {

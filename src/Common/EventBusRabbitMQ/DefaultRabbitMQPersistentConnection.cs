@@ -1,8 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Net.Sockets;
-
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 
 using Polly;
 using Polly.Retry;
@@ -10,6 +6,10 @@ using Polly.Retry;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Exceptions;
+
+using System;
+using System.IO;
+using System.Net.Sockets;
 
 namespace EventBusRabbitMQ
 {
@@ -21,8 +21,8 @@ namespace EventBusRabbitMQ
         private readonly int _retryCount;
         private bool _disposed;
 
-        public DefaultRabbitMQPersistentConnection( IConnectionFactory connectionFactory, 
-            int retryCount, 
+        public DefaultRabbitMQPersistentConnection(IConnectionFactory connectionFactory,
+            int retryCount,
             ILogger<DefaultRabbitMQPersistentConnection> logger)
         {
             _connectionFactory = connectionFactory;
@@ -76,7 +76,7 @@ namespace EventBusRabbitMQ
             TryConnect();
         }
 
-        void OnCallbackException(object sender, CallbackExceptionEventArgs e)
+        private void OnCallbackException(object sender, CallbackExceptionEventArgs e)
         {
             if (_disposed) return;
 
@@ -85,7 +85,7 @@ namespace EventBusRabbitMQ
             TryConnect();
         }
 
-        void OnConnectionShutdown(object sender, ShutdownEventArgs reason)
+        private void OnConnectionShutdown(object sender, ShutdownEventArgs reason)
         {
             if (_disposed) return;
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
 using ReportMicroService.Consumers;
 
 namespace ReportMicroService.Extensions
