@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  contactdb:
+    image: mongo
+    
+  rabbitmq:
+    image: rabbitmq:3-management
+    
+  contactmicroservice:
+    image: ${DOCKER_REGISTRY-}contactmicroservice
+    build:
+      context: .
+      dockerfile: src/Services/Contact/ContactMicroService/Dockerfile
+
+  reportmicroservice:
+    image: ${DOCKER_REGISTRY-}reportmicroservice
+    build:
+      context: .
+      dockerfile: src/Services/Report/ReportMicroService/Dockerfile
+

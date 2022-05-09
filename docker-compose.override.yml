@@ -1,0 +1,71 @@
+version: '3.4'
+
+services:
+  contactdb:
+    container_name: contactdb
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - contactdbdata:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - local
+        
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - local
+
+  contactmicroservice:
+    container_name: contactmicroservice
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - "ContactDatabaseSettings:ConnectionString:mongodb://root:example@contactdb:27017"
+      - "EventBus:HostName=rabbitmq"
+    ports:
+      - "8000:80"
+      - "8001:443"
+    depends_on:
+      - contactdb
+      - rabbitmq
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    networks:
+      - local
+
+  reportmicroservice:
+    container_name: reportmicroservice
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - "EventBus:HostName=rabbitmq"
+    depends_on:
+      - contactdb
+      - rabbitmq
+    ports:
+      - "8002:80"
+      - "8003:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    networks:
+      - local
+        
+volumes:
+  contactdbdata:
+    driver: local
+
+networks:
+  local:
+    driver: bridge
