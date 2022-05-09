@@ -1,6 +1,7 @@
 ﻿using ContactMicroService.Data.Interfaces;
 using ContactMicroService.Entities;
 using ContactMicroService.Settings;
+
 using MongoDB.Driver;
 
 namespace ContactMicroService.Data

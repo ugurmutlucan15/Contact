@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-
-using ContactMicroService.Data.Interfaces;
+﻿using ContactMicroService.Data.Interfaces;
 using ContactMicroService.Entities;
 using ContactMicroService.Models;
 using ContactMicroService.Repositories.Interfaces;
 
-using EventBusRabbitMQ.Events;
-using EventBusRabbitMQ.Events.Interfaces;
-
 using MongoDB.Driver;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace ContactMicroService.Repositories
 {

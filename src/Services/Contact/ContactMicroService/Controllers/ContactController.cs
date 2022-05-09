@@ -1,11 +1,12 @@
-﻿using System.Collections;
+﻿using ContactMicroService.Entities;
+using ContactMicroService.Repositories.Interfaces;
+
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using ContactMicroService.Entities;
-using ContactMicroService.Repositories.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace ContactMicroService.Controllers
 {
@@ -18,7 +19,7 @@ namespace ContactMicroService.Controllers
         private readonly IContactRepository _repository;
         private readonly ILogger<ContactController> _logger;
 
-        #endregion
+        #endregion Variables
 
         #region Constructor
 
@@ -28,14 +29,14 @@ namespace ContactMicroService.Controllers
             _logger = logger;
         }
 
-        #endregion
+        #endregion Constructor
 
         #region Crud_Actions
 
         #region Contact
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<Contact>), (int) HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(IEnumerable<Contact>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<IEnumerable<Contact>>> GetContacts()
         {
             var contacts = await _repository.GetContacts();
@@ -79,7 +80,7 @@ namespace ContactMicroService.Controllers
             return Ok(await _repository.Delete(id));
         }
 
-        #endregion
+        #endregion Contact
 
         #region Contact_Detail
 
@@ -106,8 +107,8 @@ namespace ContactMicroService.Controllers
             return Ok(await _repository.DeleteDetail(id));
         }
 
-        #endregion
+        #endregion Contact_Detail
 
-        #endregion
+        #endregion Crud_Actions
     }
 }

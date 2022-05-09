@@ -1,31 +1,28 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
 using EventBusRabbitMQ;
 using EventBusRabbitMQ.Contact;
+
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
+
 using RabbitMQ.Client;
+
+using ReportMicroService.Consumers;
 using ReportMicroService.Data;
 using ReportMicroService.Data.Interfaces;
+using ReportMicroService.Extensions;
 using ReportMicroService.Repositories;
 using ReportMicroService.Repositories.Interfaces;
 using ReportMicroService.Settings;
-using ReportMicroService.Extensions;
-using ReportMicroService.Consumers;
+
 using System.IO;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.AspNetCore.Http;
 
 namespace ReportMicroService
 {
@@ -51,7 +48,7 @@ namespace ReportMicroService
             services.AddSingleton<IReportDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<ReportDatabaseSettings>>().Value);
 
-            #endregion
+            #endregion Configuration Dependencies
 
             #region Project Dependencies
 
@@ -59,7 +56,8 @@ namespace ReportMicroService
             services.AddTransient<IReportRepository, ReportRepository>();
 
             services.AddAutoMapper(typeof(Startup));
-            #endregion
+
+            #endregion Project Dependencies
 
             services.AddControllers();
 
@@ -74,7 +72,7 @@ namespace ReportMicroService
                 });
             });
 
-            #endregion
+            #endregion Swagger Dependencies
 
             #region EventBus
 
@@ -109,7 +107,7 @@ namespace ReportMicroService
             services.AddSingleton<EventBusRabbitMQContact>();
             services.AddSingleton<EventBusReportCreateConsumer>();
 
-            #endregion
+            #endregion EventBus
 
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {

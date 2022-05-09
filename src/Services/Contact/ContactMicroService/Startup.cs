@@ -1,28 +1,25 @@
+using ContactMicroService.Consumers;
+using ContactMicroService.Data;
+using ContactMicroService.Data.Interfaces;
+using ContactMicroService.Extensions;
+using ContactMicroService.Repositories;
+using ContactMicroService.Repositories.Interfaces;
+using ContactMicroService.Settings;
+
+using EventBusRabbitMQ;
+using EventBusRabbitMQ.Contact;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ContactMicroService.Data;
-using ContactMicroService.Data.Interfaces;
-using ContactMicroService.Repositories;
-using ContactMicroService.Repositories.Interfaces;
-using ContactMicroService.Settings;
-using Microsoft.Extensions.Options;
-using EventBusRabbitMQ;
 using RabbitMQ.Client;
-using EventBusRabbitMQ.Contact;
-using ContactMicroService.Consumers;
-using ContactMicroService.Extensions;
+
 using System.IO;
 
 namespace ContactMicroService
@@ -39,28 +36,25 @@ namespace ContactMicroService
         }
 
         public IConfiguration Configuration { get; }
-        public IApplicationBuilder app { get; set; }
+        public IApplicationBuilder App { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             #region Configuration Dependencies
 
             services.Configure<ContactDatabaseSettings>(Configuration.GetSection(nameof(ContactDatabaseSettings)));
             services.AddSingleton<IContactDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<ContactDatabaseSettings>>().Value);
 
-            #endregion
+            #endregion Configuration Dependencies
 
             #region Project Dependencies
 
             services.AddTransient<IContactContext, ContactContext>();
             services.AddTransient<IContactRepository, ContactRepository>();
 
-
-            services.AddAutoMapper(typeof(Startup));
-            #endregion
+            #endregion Project Dependencies
 
             services.AddControllers();
 
@@ -75,7 +69,7 @@ namespace ContactMicroService
                 });
             });
 
-            #endregion
+            #endregion Swagger Dependencies
 
             #region EventBus
 
@@ -110,7 +104,7 @@ namespace ContactMicroService
             services.AddSingleton<EventBusRabbitMQContact>();
             services.AddSingleton<EventBusReportCreateConsumer>();
 
-            #endregion
+            #endregion EventBus
 
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {
@@ -134,7 +128,7 @@ namespace ContactMicroService
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ContactMicroService v1"));
 
-                #endregion
+                #endregion Swagger Configiration
             }
 
             app.UseHttpsRedirection();

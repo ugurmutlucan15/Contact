@@ -1,14 +1,18 @@
-﻿using System;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
-using EventBusRabbitMQ.Events.Interfaces;
+﻿using EventBusRabbitMQ.Events.Interfaces;
+
 using Microsoft.Extensions.Logging;
+
 using Newtonsoft.Json;
+
 using Polly;
 using Polly.Retry;
+
 using RabbitMQ.Client;
 using RabbitMQ.Client.Exceptions;
+
+using System;
+using System.Net.Sockets;
+using System.Text;
 
 namespace EventBusRabbitMQ.Contact
 {
@@ -25,7 +29,7 @@ namespace EventBusRabbitMQ.Contact
             _logger = logger;
             _retryCount = retryCount;
         }
-        
+
         public void Publish(string queueName, IEvent @event)
         {
             if (!_persistentConnection.IsConnected)
@@ -40,7 +44,7 @@ namespace EventBusRabbitMQ.Contact
                     _logger.LogWarning(ex, "Could not publish event: {EventId} after {Timeout}s ({ExceptionMessage})", @event.RequestId, $"{time.TotalSeconds:n1}", ex.Message);
                 });
 
-            using(var channel = _persistentConnection.CreateModel())
+            using (var channel = _persistentConnection.CreateModel())
             {
                 channel.QueueDeclare(queueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
                 var message = JsonConvert.SerializeObject(@event);
@@ -69,6 +73,5 @@ namespace EventBusRabbitMQ.Contact
                 });
             }
         }
-        
     }
 }

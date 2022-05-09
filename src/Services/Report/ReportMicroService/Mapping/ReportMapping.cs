@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
+
 using EventBusRabbitMQ.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using ReportMicroService.Entities;
 using ReportMicroService.Extensions;
 
